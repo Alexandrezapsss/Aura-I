@@ -1,0 +1,18 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+    controller="AccountNegociationAura">
+    <aura:attribute name="contas" type="Account[]" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:card title="Lista de Contas - Negociação" iconName="standard:account">
+        <div>
+            <aura:iteration items="{!v.contas}" var="conta">
+                <p>-----------------------------------</p>
+                <p>Nome da Conta: {!conta.Name}</p>
+                <p>Número de Telefone: {!conta.Phone}</p>
+                <p>Tipo e Conta: {!conta.Type}</p>
+                <p>Rating: {!conta.Rating}</p>
+            </aura:iteration>
+        </div>
+    </lightning:card>
+</aura:component>

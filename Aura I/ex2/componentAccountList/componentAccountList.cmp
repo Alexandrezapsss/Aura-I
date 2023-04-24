@@ -1,0 +1,25 @@
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" controller="AccountComponentController">
+    <!--Criar um atributo que recebe as contas(Accounts)-->
+    <aura:attribute name="listaContas" type="Account[]" />
+    <!--Criar atributo para escolher a forma de organizar a lista-->
+    <aura:attribute name="ordem" type="String" default="Name" />
+    <!--Aura Handler ele ao iniciar a página já engatilha uma função pré definida-->
+    <aura:handler name="init" value="{!this}" action="{!c.carregarContas}" />
+    <!--Inicio do meu card-->
+    <lightning:card title="Lista de Contas">
+        <!--Inicio do accordian-->
+        <lightning:accordion allowMultipleSectionsOpen="true">
+            <aura:iteration items="{!v.listaContas}" var="conta"><!--Ele faz algo parecido com um loop for em uma lista nesse caso ele vai-->
+            <!--ficar setando accordionSection enquanto durar a minha lista onde em items vai minha lista e var é cada item dessa lista-->
+                <lightning:accordionSection name="{!conta.Id}" label="{!conta.Name}"><!--Minha section pega pelo id para construir e label pega o nome para meu accordian principal-->
+                    <aura:set attribute="body"><!--Corpo do meu accordion onde vou colocar os campos relacionados a minha lista-->
+                        <p>Phone: {!conta.Phone}</p>
+                        <p>Type: {!conta.Type}</p>
+                        <p>Rating: {!conta.Rating}</p>
+                    </aura:set>
+                </lightning:accordionSection>
+            </aura:iteration>
+        </lightning:accordion>
+    </lightning:card>
+</aura:component>

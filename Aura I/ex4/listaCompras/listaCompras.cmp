@@ -1,0 +1,44 @@
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+    controller="ListaProdutosAura">
+    <aura:attribute name="mydata" type="ListaMaterial__c" />
+    <aura:attribute name="mycolumns" type="List" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }" />
+    <aura:attribute name="spinner" type="boolean" default="false" />
+
+    <lightning:card title="Lista de Compras">
+        <div class="slds-p-horizontal_medium">
+            <!--Começo da minha tabela-->
+            <lightning:datatable data="{! v.mydata }" columns="{! v.mycolumns }" keyField="id"
+                onrowselection="{! c.getSelectedName }" />
+            <!--Fim da minha tabela-->
+            <!--Começo do meu Formulário de produtos-->
+            <lightning:card title="Novo Produto">
+                <lightning:recordEditForm aura:id="recordEditForm" objectApiName="ListaMaterial__c"
+                    onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}"><!--Informar Objeto-->
+                    <!--Abaixo estamos pegando o campo que já vai com o seu tipo e nome-->
+                    <lightning:inputField aura:id="field" fieldName="Name" />
+                    <lightning:inputField aura:id="field" fieldName="DataCompra__c" />
+                    <lightning:inputField aura:id="field" fieldName="Quantidade__c" />
+                    <lightning:inputField aura:id="field" fieldName="PrecoUnitario__c" />
+                    <!--Criar uma decisão que se for ver chama munha função refresh-->
+                    <lightning:layout horizontalAlign="left">
+                        <lightning:layoutItem padding="around-medium" size="6">
+
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-medium" size="6">
+                            <lightning:button class="slds-m-top_small" type="submit" label="Novo Material" />
+                            <lightning:button class="slds-m-top_small" label="Cancel / Resetar Campos" onclick="{!c.handleReset}" />
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <!--Como esse botão está dentro do formulario e tem um submit nele criar um registro no objeto ligado-->
+                </lightning:recordEditForm><!--Fim do formulário no Obj Lista de compras-->
+            </lightning:card>
+        </div>
+        <!--Logica do spinner-->
+        <aura:if isTrue="{!v.spinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+        <!--Fim lógica do spinner-->
+    </lightning:card>
+</aura:component>

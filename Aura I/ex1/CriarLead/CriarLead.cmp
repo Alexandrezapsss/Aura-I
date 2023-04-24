@@ -1,0 +1,38 @@
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+    access="global">
+    <aura:attribute name="spinner" type="boolean" default="false" />
+    <lightning:card title="Criar Lead"><!--Corpo do Card - Estrutura pega nos Card em Salesforce-->
+        <!---->
+        <div class="slds-p-horizontal_small"><!--Começo criar bloco padrão igual do sales force com campos -->
+            <!--Começo do Formulário de registros - Pego no recordEditForm em Salesforce-->
+            <lightning:recordEditForm aura:id="recordEditForm" objectApiName="Lead" onsubmit="{!c.handleSubmit}"
+                onsuccess="{!c.handleSuccess}"><!--Informar Objeto-->
+                <!--Abaixo estamos pegando o campo que já vai com o seu tipo e nome-->
+                <lightning:inputField aura:id="field" fieldName="Name" />
+                <lightning:inputField aura:id="field" fieldName="Company" />
+                <lightning:inputField aura:id="field" fieldName="LeadSource" />
+                <lightning:inputField aura:id="field" fieldName="Status" />
+                <lightning:inputField aura:id="field" fieldName="Description" />
+                <!--Criar uma decisão que se for ver chama munha função refresh-->
+                <lightning:layout horizontalAlign="left">
+                        <lightning:layoutItem padding="around-medium" size="6">
+
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-medium" size="6">
+                            <lightning:button class="slds-m-top_small" type="submit" label="Criar um Novo Lead" />
+                            <lightning:button class="slds-m-top_small" label="Cancel / Resetar Campos" onclick="{!c.handleReset}" />
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                <!--Como esse botão está dentro do formulario e tem um submit nele criar um registro no objeto ligado-->
+            </lightning:recordEditForm><!--Fim do formulário no Obj Lead-->
+
+        </div><!--Fim do bloco aproveitando a classe do card "slds-p-horizontal_small"-->
+        <!--Efeito de Spinner -  Loading no Salesforce-->
+        <!--Logica do spinner-->
+        <aura:if isTrue="{!v.spinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+        <!--Fim lógica do spinner-->
+    </lightning:card><!--Fim do card-->
+</aura:component>
